@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+package wire.issue;
+
+message Options {
+  map<string, string> config = 1;
+}
+
+extend google.protobuf.MessageOptions {
+  repeated Options opt = 80000;
+}
+
+message SomeMessage {
+  option (wire.issue.opt) = {
+    config: [
+      {
+        key: "some_key",
+        value: "some_value"
+      }
+    ]
+  };
+
+  string id = 1;
+}
